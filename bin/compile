@@ -70,13 +70,13 @@ echo "==========3"
 # composer
 # Composer Installation
 pushd ${BUILD_DIR} > /dev/null
-if [ -f "composer.json" ]
+if [ -f "www/composer.json" ]
 then
   echo "-----> Installing dependencies using Composer"
   GIT_DIR_ORIG=${GIT_DIR}
   unset GIT_DIR
 
-  if [ ! -f "composer.phar" ]
+  if [ ! -f "www/composer.phar" ]
   then
     echo "Fetching composer.phar"
     echo ${COMPOSER_URL} 

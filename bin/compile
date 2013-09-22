@@ -26,13 +26,14 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 # composer
 export COMPOSER_HOME="${CACHE_DIR}/.composer"
 COMPOSER_URL="http://117.121.14.61/composer.phar"
-
+echo "==========1"
 # include .files when moving things around
 shopt -s dotglob
 
 # composer
 mkdir -p $BUILD_DIR $CACHE_DIR ${BUNDLE_DIR} ${BUILD_DIR}/local ${BUILD_DIR}/vendor/bin ${COMPOSER_HOME}
 
+echo "==========2"
 cd $BUILD_DIR
 
 # move app things to www
@@ -65,6 +66,7 @@ cp $LP_DIR/conf/php.ini php
 mkdir -p bin
 ln -s /app/php/bin/php bin/php
 
+echo "==========3"
 # composer
 # Composer Installation
 pushd ${BUILD_DIR} > /dev/null
@@ -90,7 +92,7 @@ then
   export GIT_DIR=${GIT_DIR_ORIG}
 fi
 popd > /dev/null
-
+echo "==========4"
 # check if we have Propel Migrations to run
 #if [ -f www/vendor/bin/propel-gen ]; then
 #  export LD_LIBRARY_PATH=$BUILD_DIR/php/ext

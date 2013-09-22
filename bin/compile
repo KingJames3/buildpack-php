@@ -86,8 +86,8 @@ then
 
   # do the deed!
   echo "Running: php composer.phar install" 
-  LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
-  #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" /app/php/bin/php composer.phar install -n
+  #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
+  LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" php composer.phar install -n
 
   export GIT_DIR=${GIT_DIR_ORIG}
 fi

@@ -93,16 +93,16 @@ then
 fi
 popd > /dev/null
 echo "==========4"
-# check if we have Propel Migrations to run
-#if [ -f www/vendor/bin/propel-gen ]; then
-#  export LD_LIBRARY_PATH=$BUILD_DIR/php/ext
-#  export PATH=$BUILD_DIR/php/bin:$PATH
-#  echo "-----> Running Propel migrations"
-#  cd www
-#  vendor/bin/propel-gen ./ -Dpropel.buildtime.conf.file=herokutime-conf.xml migrate
-#  cd $BUILD_DIR
-#fi
-
+ check if we have Propel Migrations to run
+if [ -f www/vendor/bin/propel-gen ]; then
+  export LD_LIBRARY_PATH=$BUILD_DIR/php/ext
+  export PATH=$BUILD_DIR/php/bin:$PATH
+  echo "-----> Running Propel migrations"
+  cd www
+  vendor/bin/propel-gen ./ -Dpropel.buildtime.conf.file=herokutime-conf.xml migrate
+  cd $BUILD_DIR
+fi
+echo "=====5"
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do
   echo "PassEnv \$var" >> /app/apache/conf/httpd.conf;

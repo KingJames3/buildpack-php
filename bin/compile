@@ -76,7 +76,7 @@ then
   GIT_DIR_ORIG=${GIT_DIR}
   unset GIT_DIR
 
-  if [ ! -f "www/composer.phar" ]
+  if [ ! -f "composer.phar" ]
   then
     echo "Fetching composer.phar"
     echo ${COMPOSER_URL} 

@@ -31,6 +31,7 @@ shopt -s dotglob
 
 # composer
 #mkdir -p $BUILD_DIR $CACHE_DIR ${BUNDLE_DIR} ${BUILD_DIR}/local ${BUILD_DIR}/vendor/bin ${COMPOSER_HOME}
+mkdir $BUILD_DIR/php/lib/php
 
 cd $BUILD_DIR
 
@@ -47,7 +48,7 @@ fi
 MCRYPT_URL="http://117.121.14.61/mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz"
 echo "-----> Bundling mcrypt version $MCRYPT_VERSION"
 curl -L -m 300 --connect-timeout 60 "$MCRYPT_URL" > mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz
-tar xzf mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz  -C /app/php/lib/php
+tar xzf mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz  -C $BUILD_DIR/php/lib/php
 
 APACHE_URL="http://117.121.14.61/apache-""$APACHE_VERSION""$heroku_rev"".tar.gz"
 echo "-----> Bundling Apache version $APACHE_VERSION"
@@ -117,7 +118,7 @@ if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   cd www
   #LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
-  LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
+  LD_LIBRARY_PATH=$BUILD_DIR/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
   
   rm -rf vendor/**/.git
   cd $BUILD_DIR

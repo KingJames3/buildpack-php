@@ -69,7 +69,7 @@ ln -s /app/php/bin/php bin/php
 echo "==========3"
 # composer
 # Composer Installation
-pushd ${BUILD_DIR} > /dev/null
+#pushd ${BUILD_DIR} > /dev/null
 if [ -f "www/composer.json" ]
 then
   echo "-----> Installing dependencies using Composer"
@@ -91,7 +91,7 @@ then
 
   export GIT_DIR=${GIT_DIR_ORIG}
 fi
-popd > /dev/null
+#popd > /dev/null
 echo "==========4"
  check if we have Propel Migrations to run
 if [ -f www/vendor/bin/propel-gen ]; then

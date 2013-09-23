@@ -80,9 +80,9 @@ then
    # download_url ${COMPOSER_URL}
    curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" 
    echo "=======pwd"
-   echo $(pwd)
+   echo $(ll composer.phar)
    #curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
-   #chmod a+x ${BUILD_DIR}/vendor/bin/composer.phar
+   chmod a+x composer.phar
   fi
 
   # do the deed!

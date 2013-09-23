@@ -67,33 +67,55 @@ ln -s /app/php/bin/php bin/php
 # composer
 # Composer Installation
 #pushd ${BUILD_DIR} > /dev/null
-if [ -f "www/composer.json" ]
-then
-  echo "-----> Installing dependencies using Composer"
-  GIT_DIR_ORIG=${GIT_DIR}
-  unset GIT_DIR
+#if [ -f "www/composer.json" ]
+#then
+#  echo "-----> Installing dependencies using Composer"
+#  GIT_DIR_ORIG=${GIT_DIR}
+#  unset GIT_DIR
 
-  if [ ! -f "composer.phar" ]
-  then
-    echo "Fetching composer.phar"
-   # download_url ${COMPOSER_URL}
-   curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" 
-   echo "=======pwd"
-   echo $(pwd)
-   echo $(ls composer.phar)
-   #curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
-   chmod a+x composer.phar
-  fi
+#  if [ ! -f "composer.phar" ]
+#  then
+#    echo "Fetching composer.phar"
+#   # download_url ${COMPOSER_URL}
+#   curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" 
+#   echo "=======pwd"
+#   echo $(pwd)
+#   echo $(ls composer.phar)
+#   #curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
+#   chmod a+x composer.phar
+#  fi
 
-  # do the deed!
-  echo "Running: php composer.phar install" 
-  #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
-  export LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" 
-  $(which php) composer.phar install -n
+#  # do the deed!
+#  echo "Running: php composer.phar install" 
+#  #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
+#  export LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" 
+#  $(which php) composer.phar install -n
 
-  export GIT_DIR=${GIT_DIR_ORIG}
-fi
-#popd > /dev/null
+#  export GIT_DIR=${GIT_DIR_ORIG}
+#fi
+##popd > /dev/null
+export COMPOSER_CACHE_DIR=$CACHE_DIR/composer
+    mkdir -p $COMPOSER_CACHE_DIR
+
+    echo "-----> Vendoring Composer"
+    {
+        mkdir -p "${BUILD_DIR}/vendor/composer/bin"
+        curl -L "http://getcomposer.org/composer.phar" > "${BUILD_DIR}/vendor/composer/bin/composer.phar"
+        chmod a+x "$target/vendor/composer/bin/composer.phar"
+    } 
+
+    echo "-----> Installing application dependencies with Composer"
+    {
+        
+        "$(which php)" \
+            "${BUILD_DIR}/vendor/composer/bin/composer.phar" install \
+            --prefer-dist \
+            --optimize-autoloader \
+            --no-interaction
+
+       # cd "$cwd"
+    } 
+
 echo "==========4"
  check if we have Propel Migrations to run
 if [ -f www/vendor/bin/propel-gen ]; then

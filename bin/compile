@@ -26,14 +26,12 @@ LP_DIR=`cd $(dirname $0); cd ..; pwd`
 # composer
 export COMPOSER_HOME="${CACHE_DIR}/.composer"
 COMPOSER_URL="http://117.121.14.61/composer.phar"
-echo "==========1"
 # include .files when moving things around
 shopt -s dotglob
 
 # composer
 mkdir -p $BUILD_DIR $CACHE_DIR ${BUNDLE_DIR} ${BUILD_DIR}/local ${BUILD_DIR}/vendor/bin ${COMPOSER_HOME}
 
-echo "==========2"
 cd $BUILD_DIR
 
 # move app things to www
@@ -66,7 +64,6 @@ cp $LP_DIR/conf/php.ini php
 mkdir -p bin
 ln -s /app/php/bin/php bin/php
 
-echo "==========3"
 # composer
 # Composer Installation
 #pushd ${BUILD_DIR} > /dev/null
@@ -81,13 +78,14 @@ then
     echo "Fetching composer.phar"
     echo ${COMPOSER_URL} 
    # download_url ${COMPOSER_URL}
-   curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}"
+   curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
+   chmod a+x ${BUILD_DIR}/vendor/bin/composer.phar
   fi
 
   # do the deed!
   echo "Running: php composer.phar install" 
   #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
-  LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" $(which php) composer.phar install -n
+  LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" $(which php) ${BUILD_DIR}/vendor/bin/composer.phar install -n
 
   export GIT_DIR=${GIT_DIR_ORIG}
 fi

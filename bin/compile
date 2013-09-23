@@ -64,49 +64,6 @@ cp $LP_DIR/conf/php.ini php
 mkdir -p bin
 ln -s /app/php/bin/php bin/php
 
-
-# composer
-# Composer Installation
-#pushd ${BUILD_DIR} > /dev/null
-#if [ -f "www/composer.json" ]
-#then
-#  echo "-----> Installing dependencies using Composer"
-#  GIT_DIR_ORIG=${GIT_DIR}
-#  unset GIT_DIR
-
-#  if [ ! -f "composer.phar" ]
-#  then
-#    echo "Fetching composer.phar"
-#   # download_url ${COMPOSER_URL}
-#   curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" 
-#   #curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
-#   chmod a+x composer.phar
-#  fi
-
-#  # do the deed!
-#  echo "Running: php composer.phar install" 
-#  #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
-#  #export LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" 
-#  export LD_LIBRARY_PATH=${BUILD_DIR}/vendor
-#  export PATH=$BUILD_DIR/php/bin:$PATH
-#  php composer.phar install -n
-
-#  export GIT_DIR=${GIT_DIR_ORIG}
-#fi
-#popd > /dev/null
-
-echo "==========4"
-# check if we have Propel Migrations to run
-#if [ -f www/vendor/bin/propel-gen ]; then
-#  export LD_LIBRARY_PATH=$BUILD_DIR/php/ext
-#  export PATH=$BUILD_DIR/php/bin:$PATH
-#  echo "-----> Running Propel migrations"
-#  cd www
-#  vendor/bin/propel-gen ./ -Dpropel.buildtime.conf.file=herokutime-conf.xml migrate
-#  cd $BUILD_DIR
-#fi
-#echo "=====5"
-
 # check if we have Composer dependencies and vendors are not bundled
 if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   GIT_DIR_ORIG=$GIT_DIR
@@ -116,8 +73,8 @@ if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   cd www
   #LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
-  LD_LIBRARY_PATH=$BUILD_DIR/vendor/mcrypt/lib $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
-  
+  #LD_LIBRARY_PATH=$BUILD_DIR/vendor/mcrypt/lib $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
+  LD_LIBRARY_PATH=$BUILD_DIR/php/lib/php $BUILD_DIR/php/bin/pecl install mongo
   rm -rf vendor/**/.git
   cd $BUILD_DIR
   rm www/composer.phar

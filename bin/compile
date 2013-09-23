@@ -56,9 +56,9 @@ PHP_URL="http://117.121.14.61/php-$PHP_VERSION""$heroku_rev"".tar.gz"
 echo "-----> Bundling PHP version $PHP_VERSION"
 curl --silent --max-time 60 --location "$PHP_URL" | tar xz
 
-# update config files
+# update config files 
 cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
-cp $LP_DIR/conf/php.ini php
+
 
 # make php available on bin
 mkdir -p bin
@@ -123,6 +123,8 @@ if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   export GIT_DIR=$GIT_DIR_ORIG
 fi
 
+# update config files
+cp $LP_DIR/conf/php.ini php
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do

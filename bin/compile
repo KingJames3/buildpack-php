@@ -58,7 +58,7 @@ curl --silent --max-time 60 --location "$PHP_URL" | tar xz
 
 # update config files 
 cp $LP_DIR/conf/httpd.conf $APACHE_PATH/conf
-
+cp $LP_DIR/conf/php.ini php
 
 # make php available on bin
 mkdir -p bin
@@ -116,15 +116,15 @@ if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   cd www
   #LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
-  LD_LIBRARY_PATH=/app/vendor/mcrypt/lib $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
+  LD_LIBRARY_PATH=$BUILD_DIR/vendor/mcrypt/lib $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
   rm -rf vendor/**/.git
   cd $BUILD_DIR
   rm www/composer.phar
   export GIT_DIR=$GIT_DIR_ORIG
 fi
 
-# update config files
-cp $LP_DIR/conf/php.ini php
+
+
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do

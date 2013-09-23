@@ -76,11 +76,11 @@ then
   if [ ! -f "composer.phar" ]
   then
     echo "Fetching composer.phar"
-    echo ${COMPOSER_URL} 
    # download_url ${COMPOSER_URL}
    curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" 
    echo "=======pwd"
-   echo $(ll composer.phar)
+   echo $(pwd)
+   echo $(ls composer.phar)
    #curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
    chmod a+x composer.phar
   fi

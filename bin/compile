@@ -78,16 +78,17 @@ then
     echo "Fetching composer.phar"
     echo ${COMPOSER_URL} 
    # download_url ${COMPOSER_URL}
-   #curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
-   
-   curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
-   chmod a+x ${BUILD_DIR}/vendor/bin/composer.phar
+   curl -s -S -O -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" 
+   echo "=======pwd"
+   echo $(pwd)
+   #curl -L -m 300 --connect-timeout 60 "${COMPOSER_URL}" > ${BUILD_DIR}/vendor/bin/composer.phar
+   #chmod a+x ${BUILD_DIR}/vendor/bin/composer.phar
   fi
 
   # do the deed!
   echo "Running: php composer.phar install" 
   #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
-  LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" $(which php) ${BUILD_DIR}/vendor/bin/composer.phar install -n
+  LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" $(which php) composer.phar install -n
 
   export GIT_DIR=${GIT_DIR_ORIG}
 fi

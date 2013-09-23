@@ -44,9 +44,9 @@ if [ -f www/Procfile ]; then
   mv www/Procfile .
 fi
 
-MCRYPT_URL="http://117.121.14.61/mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz"
-echo "-----> Bundling mcrypt version $MCRYPT_VERSION"
-curl --silent --max-time 60 --location "$MCRYPT_URL" | tar xz
+#MCRYPT_URL="http://117.121.14.61/mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz"
+#echo "-----> Bundling mcrypt version $MCRYPT_VERSION"
+#curl --silent --max-time 60 --location "$MCRYPT_URL" | tar xz
 
 APACHE_URL="http://117.121.14.61/apache-""$APACHE_VERSION""$heroku_rev"".tar.gz"
 echo "-----> Bundling Apache version $APACHE_VERSION"
@@ -115,7 +115,7 @@ if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   #COMPOSER_URL="http://getcomposer.org/composer.phar"
   curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
   cd www
-  LD_LIBRARY_PATH=$BUILD_DIR/vendor/mcrypt/lib $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
+  LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
   rm -rf vendor/**/.git
   cd $BUILD_DIR
   rm www/composer.phar

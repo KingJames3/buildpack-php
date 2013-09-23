@@ -46,7 +46,7 @@ fi
 
 MCRYPT_URL="http://117.121.14.61/mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz"
 echo "-----> Bundling mcrypt version $MCRYPT_VERSION"
-curl -L -m 300 --connect-timeout 60 "$MCRYPT_URL"
+curl -L -m 300 --connect-timeout 60 "$MCRYPT_URL" > mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz
 tar xzf mcrypt-""$MCRYPT_VERSION""$heroku_rev"".tar.gz  -C $BUILD_DIR/php/lib/php
 
 APACHE_URL="http://117.121.14.61/apache-""$APACHE_VERSION""$heroku_rev"".tar.gz"

@@ -124,8 +124,7 @@ echo "==========4"
 #  export GIT_DIR=$GIT_DIR_ORIG
 #fi
 
-
-$BUILD_DIR/php/bin/pecl install redis
+LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/pecl install redis
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do

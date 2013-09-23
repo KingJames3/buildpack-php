@@ -31,7 +31,7 @@ shopt -s dotglob
 
 # composer
 #mkdir -p $BUILD_DIR $CACHE_DIR ${BUNDLE_DIR} ${BUILD_DIR}/local ${BUILD_DIR}/vendor/bin ${COMPOSER_HOME}
-mkdir $BUILD_DIR/php/lib/php
+mkdir -p $BUILD_DIR/php/lib/php
 
 cd $BUILD_DIR
 

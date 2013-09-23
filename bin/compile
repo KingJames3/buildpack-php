@@ -75,7 +75,7 @@ if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
   #LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
   # temporary solution
   mv $BUILD_DIR/vendor/mcrypt $BUILD_DIR/php/lib/php/extensions/
-  LD_LIBRARY_PATH=$BUILD_DIR/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
+  LD_LIBRARY_PATH=$BUILD_DIR/local/lib $BUILD_DIR/php/bin/php   composer.phar install
   rm -rf vendor/**/.git
   cd $BUILD_DIR
   rm www/composer.phar

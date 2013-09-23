@@ -94,14 +94,14 @@ ln -s /app/php/bin/php bin/php
 #  export GIT_DIR=${GIT_DIR_ORIG}
 #fi
 ##popd > /dev/null
-export COMPOSER_CACHE_DIR=$CACHE_DIR/composer
+    export COMPOSER_CACHE_DIR=$CACHE_DIR/composer
     mkdir -p $COMPOSER_CACHE_DIR
 
     echo "-----> Vendoring Composer"
     {
         mkdir -p "${BUILD_DIR}/vendor/composer/bin"
         curl -L "http://getcomposer.org/composer.phar" > "${BUILD_DIR}/vendor/composer/bin/composer.phar"
-        chmod a+x "$target/vendor/composer/bin/composer.phar"
+        chmod a+x "${BUILD_DIR}/vendor/composer/bin/composer.phar"
     } 
 
     echo "-----> Installing application dependencies with Composer"

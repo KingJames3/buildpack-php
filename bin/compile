@@ -108,23 +108,23 @@ echo "==========4"
 #echo "=====5"
 
 # check if we have Composer dependencies and vendors are not bundled
-#if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
-#  GIT_DIR_ORIG=$GIT_DIR
-#  unset GIT_DIR
-#  echo "-----> Installing Composer dependencies"
-#  #COMPOSER_URL="http://getcomposer.org/composer.phar"
-#  curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
-#  cd www
-#  #LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
-#  #LD_LIBRARY_PATH=$BUILD_DIR/vendor/mcrypt/lib $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
+if [ -f www/composer.json ] && [ ! -d www/vendor ]; then
+  GIT_DIR_ORIG=$GIT_DIR
+  unset GIT_DIR
+  echo "-----> Installing Composer dependencies"
+  #COMPOSER_URL="http://getcomposer.org/composer.phar"
+  curl --silent --max-time 60 --location "$COMPOSER_URL" > www/composer.phar
+  cd www
+  #LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini composer.phar install --prefer-source
+  $BUILD_DIR/php/bin/php -c $LP_DIR/conf/php.ini  composer.phar install --prefer-source -v
   
-#  rm -rf vendor/**/.git
-#  cd $BUILD_DIR
-#  rm www/composer.phar
-#  export GIT_DIR=$GIT_DIR_ORIG
-#fi
+  rm -rf vendor/**/.git
+  cd $BUILD_DIR
+  rm www/composer.phar
+  export GIT_DIR=$GIT_DIR_ORIG
+fi
 
-LD_LIBRARY_PATH=/app/php/lib/php $BUILD_DIR/php/bin/pecl install redis
+
 
 cat >>boot.sh <<EOF
 for var in \`env|cut -f1 -d=\`; do

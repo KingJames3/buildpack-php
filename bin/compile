@@ -87,7 +87,7 @@ then
   echo "Running: php composer.phar install" 
   #LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" ${BUILD_DIR}/vendor/php/bin/php composer.phar install -n
   #export LD_LIBRARY_PATH="${BUILD_DIR}/local/lib" 
-  export LD_LIBRARY_PATH=/app/php/lib/php
+  export LD_LIBRARY_PATH=${BUILD_DIR}/vendor
   export PATH=$BUILD_DIR/php/bin:$PATH
   php composer.phar install -n
 
